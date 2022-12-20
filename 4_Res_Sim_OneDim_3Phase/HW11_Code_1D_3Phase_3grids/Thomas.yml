@@ -1,0 +1,129 @@
+---
+reservoir:
+    T: 175  # Reservoir Temperature [F]
+    L: 1000  # Length of reservoir [ft]
+    w: 100  # Width of reservoir [ft]
+    h: 100  # Thickness of reservoir [ft]
+    Dtop: 0  # Depth at top of the reservoir [ft]
+    woc: 0  # Water-oil contact line [ft]
+    pwoc: 0  # Pressure at water-oil contact line [psia]
+    D: 0  # Depths of grids. Grid top should be added to depths [ft]. This could be a scalar, list or a filename
+    k: 10  # Permeability of grids [mD]. This could be a scalar, list, or a filename
+    phi: 0.2  # Porosity of grids. This could be a scalar, list, or a filename
+    kx_val: 1.0 # Anisotropy factor
+    ky_val: 1.0 # Anisotropy factor
+    kz_val: 1.0 # Anisotropy factor
+    
+pvt:
+    phase: 3.0 # Number of phases
+    muw: 0.383  # Viscosity of water at reservoir conditions [cp]
+    Bw: 1.023  # Water formation volume factor [RB/STB]
+    cw: 3.0e-6  # Water compressibility [1/psi]
+    rhowsc: 63.2  # Water density at standard conditions [lbm/ft3]
+    muo: 5.0  # Undersaturated viscosity of oil [cp]
+    mug: 0.01 # Gas viscosity [cp]
+    Bob: 1.2  # Undersaturated oil formation volume factor [RB/STB]
+    Rsb: 500  # Undersaturated solution-gas ration [scf/STB]
+    Rs: 500  # Undersaturated
+    co: 2.87e-6  # Undersaturated compressibility of oil [1/psi]
+    rhoosc: 50  # Density of oil at standard conditions [lbm/ft3]
+    pb: 1000  # Bubble point of oil [psia]
+    Mg: 19  # Gas molecular weight [lbm/lbmole]
+    cf: 1.0e-6  # Rock compressibility [1/psi]
+
+petrophysical:
+    Sor: 0.1  # Residual oil saturation
+    Sorw: 0.4  # Stone I model
+    Sorg: 0.2  # Stone I model
+    Sgr: 0.05  # Stone I model
+    Swr: 0.1  # Residual water saturation
+    Swi: 0.1  # Initial water saturation
+    krwo: 0.3  # Endpoint water relative permeability
+    krowo: 0.8 # Endpoint oil/water relative permeability
+    krogo: 0.8 # Endpoint water relative permeability
+    krgo: 0.3 # Endpoint water relative permeability
+    kroo: 1.0  # Endpoint oil relative permeability
+    Nw: 2  # Corey exponent to oil
+    Ng: 2  # Corey exponent to water
+    Now: 2 # Corey exponent to water
+    Nog: 2 # Corey exponent to water
+    Pce: 4.0  # Capillary Entry Pressure [psia]
+    lambda: 2.0
+    Sw_hyst: 0.4 # Hysterisis saturation for scanning curve
+    epspc: 1.0e-7 # Small number for scanning curve
+    
+numerical:
+    Nx: 3  # Grids in x-direction
+    Ny: 1  # Grids in y-direction
+    Nz: 1  # Grids in z-direction
+    dt: 1.0  # Timestep [days]; Note: you can probably increase to 5 or 10 days after year 1
+    t_final: 2190  # Max time [days] = 25 years
+    1-phase_method: "IM"  # Implicit, explicit, or C-N
+    2-phase_method: "IMPES"  # IMPES, SS, or Fully Implicit    
+
+boundary_conditions:
+    P_init: 1000
+    BC_xi: "Neumann" # Boundary condition on left
+    BC_xe: "Neumann" # Boundary condition on right
+    BC_yi: "Neumann" # Boundary condition on base
+    BC_ye: "Neumann" # Boundary condition on top
+    BC_xi_val: 0.0 # Value for bc [psi or ft/s]
+    BC_xe_val: 0.0 # Value for bc [psi or ft/s]
+    BC_yi_val: 0.0 # Value for bc [psi or ft/s]
+    BC_ye_val: 0.0 # Value for bc [psi or ft/s]
+    
+well:
+    well_id: # IDs of Wells
+        - 0
+        - 1
+        - 2
+    x_start: # List of starting x-locations for wells (dimensionless, 0<x<1)
+        - 0.49 
+        - 0.01 
+        - 0.6
+    x_end: # List of ending x-locations for wells (dimensionless, 0<x<1)
+        - 0.49
+        - 0.01 
+        - 0.6
+    y_start: # List of starting y-locations for all wells (dimensionless, 0<y<1)
+        - 0 
+        - 0 
+        - 0 
+    y_end: # List of ending y-locations for wells (dimensionless, 0<y<1)
+        - 0 
+        - 0 
+        - 0 
+    z_start: # List of starting z-locations for wells (dimensionless, 0<z<1)
+        - 0 
+        - 0 
+        - 0 
+    z_end: # List of ending z-locations for wells (dimensionless, 0<z<1)
+        - 0 
+        - 0 
+        - 0 
+    rw:  # Well radius
+        - 0.25
+        - 0.25
+        - 0.25
+    skin:  # Well skin
+        - 0.
+        - 0. 
+        - 0.
+    type:  # Initial well type. 0 for constant rate, 1 for constant BHP wells
+        - 0 
+        - 0
+        - 0 
+    rates: # Initial liquid production rate or well pressure 
+        - -561.5 # [scf/day OR psia]
+        - 0. # [scf/day OR psia]	
+        - 0. # [scf/day OR psia]
+
+    min_BHP: # all wells; convert to BHP well if producer reaches limit
+        - 14.7 # [psia]
+        - 14.7 # [psia]	
+        - 14.7 # [psia]
+        
+    inj_rate: # initial water injection rate for producer converted to injector
+        - 0. # [scf/day]
+        - 280.75 # [scf/day]	
+        - 280.75 # [scf/day]
