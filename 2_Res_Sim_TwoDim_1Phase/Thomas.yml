@@ -1,0 +1,131 @@
+---
+reservoir:
+    T: 150  # Reservoir Temperature [F]
+    L: 5000  # Length of reservoir [ft]
+    w: 5000  # Width of reservoir [ft]
+    h: 20  # Thickness of reservoir [ft]
+    Dtop: 5500  # Depth at top of the reservoir [ft]
+    woc: 7000  # Water-oil contact line [ft]
+    pwoc: 3200  # Pressure at water-oil contact line [psia]
+    D: "Thomas_Depth.txt"  # Depths of grids. Grid top should be added to depths [ft]. This could be a scalar, list or a filename
+    kx: "Thomas_Perm.txt"  # Permeability of grids [mD]. This could be a scalar, list, or a filename
+    phi: "Thomas_porosity.txt"  # Porosity of grids. This could be a scalar, list, or a filename
+    
+pvt:
+    muw: 0.5  # Viscosity of water at reservoir conditions [cP]
+    Bw: 1.0  # Water formation volume factor [RB/STB]
+    cw: 1.0e-6  # Water compressibility [1/psi]
+    rhowsc: 63  # Water density at standard conditions [lbm/ft3]
+    muo: 5.0  # Undersaturated viscosity of oil [cP]
+    Bob: 1.2  # Undersaturated oil formation volume factor [RB/STB]
+    co: 1.0e-5  # Undersaturated compressibility of oil [1/psi]
+    rhoosc: 50  # Density of oil at standard conditions [lbm/ft3]
+    pb: 1000  # Bubble point of oil [psi]
+    Mg: 19  # Gas molecular weight [lbm/lbmole]
+    cf: 1.0e-6  # Rock compressibility [1/psi]
+    ct: 1.0e-5  # Rock compressibility [1/psi]
+
+
+BC:
+    type: [['Neumann'],['Neumann'],['Neumann'],['Neumann']]  #left, right, bottom, top
+    value: [[0],[0],[0],[0]] # 
+IC:
+    P: 3000 #Pressure in psia
+    Dref: 6400 #Reference Depth
+
+petrophysical:
+    Sor: 0.3  # Residual oil saturation
+    Swr: 0.2  # Residual water saturation
+    krwo: 0.2  # Endpoint water relative permeability
+    kroo: 1.0  # Endpoint oil relative permeability
+    n_o: 2  # Corey exponent to oil
+    n_w: 2  # Corey exponent to water
+    Pce: 4.0  # Capillary Entry Pressure [psia]
+    lam: 2.0
+    
+numerical:
+    Nx: 80  # Grids in x-direction
+    Ny: 75  # Grids in y-direction
+    Nz: 1  # Grids in z-direction
+    dx:  #ft grid spacing in x direction
+    dy:  #ft grid spacing in y direction
+    dz:  #ft grid spacing in z direction
+    dt: 1.0  # Timestep [days]
+    t_final: 100  # Final simulation time [days]
+    one_phase_method: 0  # Implicit, explicit, or C-N
+    2-phase_method: "IMPES"  # IMPES, SS, or Fully Implicit    
+
+well:
+    well_id: # IDs of Wells
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+    x_start: # List of starting x-locations for wells
+        - 0.1 
+        - 0.91 
+        - 0.13 
+        - 0.46 
+        - 0.43
+    x_end: # List of ending x-locations for wells
+        - 0.1
+        - 0.91 
+        - 0.13 
+        - 0.46 
+        - 0.87
+    y_start: # List of starting y-locations for all wells
+        - 0.15
+        - 0.12
+        - 0.88 
+        - 0.52 
+        - 0.92
+    y_end: # List of ending y-locations for wells
+        - 0.15 
+        - 0.12 
+        - 0.88 
+        - 0.52 
+        - 0.92
+    z_start: # List of starting z-locations for wells
+        - 0 
+        - 0 
+        - 0 
+        - 0 
+        - 0
+    z_end: # List of ending z-locations for wells
+        - 0 
+        - 0 
+        - 0 
+        - 0 
+        - 0
+    rw:  # Well radius
+        - 0.25
+        - 0.25
+        - 0.25
+        - 0.25
+        - 0.25
+    skin:  # Well skin
+        - 0.
+        - -2 
+        - 5 
+        - 3 
+        - 0
+    kind:  # Initial well kind. 0 for Producers, 1 for Injectors
+        - 0 
+        - 0
+        - 0 
+        - 0
+        - 0
+    type:  # Initial well type. 0 for constant rate, 1 for constant BHP wells
+        - 1 
+        - 1
+        - 1 
+        - 1
+        - 1
+    rates: # Initial flow rate or well pressure 
+        - 2000. 
+        - 2000. 
+        - 2000. 
+        - 2000. 
+        - 2000.
+    Jindex: # Initial flow rate or well pressure 
