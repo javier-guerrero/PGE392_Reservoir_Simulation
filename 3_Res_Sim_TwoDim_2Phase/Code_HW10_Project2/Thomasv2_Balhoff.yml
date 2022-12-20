@@ -1,0 +1,136 @@
+---
+reservoir:
+    T: 150  # Reservoir Temperature [F]
+    L: 5000  # Length of reservoir [ft]
+    w: 5000  # Width of reservoir [ft]
+    h: 50  # Thickness of reservoir [ft]
+    Dtop: 5500  # Depth at top of the reservoir [ft]
+    woc: 7000  # Water-oil contact line [ft]
+    pwoc: 3200  # Pressure at water-oil contact line [psia]
+    D: "Thomas_Depth.txt"  # Depths of grids. Grid top should be added to depths [ft]. This could be a scalar, list or a filename
+    k: "Thomas_Perm.txt"  # Permeability of grids [mD]. This could be a scalar, list, or a filename
+    phi: "Thomas_porosity.txt"  # Porosity of grids. This could be a scalar, list, or a filename
+    
+pvt:
+    muw: 0.5  # Viscosity of water at reservoir conditions [cp]
+    Bw: 1.0  # Water formation volume factor [RB/STB]
+    cw: 1.0e-6  # Water compressibility [1/psi]
+    rhowsc: 63  # Water density at standard conditions [lbm/ft3]
+    muo: 5.0  # Undersaturated viscosity of oil [cp]
+    Bob: 1.2  # Undersaturated oil formation volume factor [RB/STB]
+    Rsb: 500  # Undersaturated solution-gas ration [scf/STB]
+    co: 1.0e-5  # Undersaturated compressibility of oil [1/psi]
+    rhoosc: 50  # Density of oil at standard conditions [lbm/ft3]
+    pb: 100  # Bubble point of oil [psia]
+    Mg: 19  # Gas molecular weight [lbm/lbmole]
+    cf: 1.0e-6  # Rock compressibility [1/psi]
+
+petrophysical:
+    Sor: 0.3  # Residual oil saturation
+    Swr: 0.2  # Residual water saturation
+    krwo: 0.2  # Endpoint water relative permeability
+    kroo: 1.0  # Endpoint oil relative permeability
+    n_o: 2  # Corey exponent to oil
+    n_w: 2  # Corey exponent to water
+    Pce: 4.0  # Capillary Entry Pressure [psia]
+    lambda: 2.0
+    
+numerical:
+    Nx: 40  # Grids in x-direction
+    Ny: 30  # Grids in y-direction
+    Nz: 1  # Grids in z-direction
+    dt: 1.0  # Timestep [days]; Note: you can probably increase to 5 or 10 days after year 1
+    t_max: 9130  # Max time [days] = 25 years
+    1-phase_method: "IM"  # Implicit, explicit, or C-N
+    2-phase_method: "IMPES"  # IMPES, SS, or Fully Implicit    
+
+well:
+    well_id: # IDs of Wells
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+    x_start: # List of starting x-locations for wells (dimensionless, 0<x<1)
+        - 0.13 
+        - 0.85 
+        - 0.55 
+        - 0.10 
+        - 0.78
+    x_end: # List of ending x-locations for wells (dimensionless, 0<x<1)
+        - 0.23
+        - 0.85 
+        - 0.55 
+        - 0.10 
+        - 0.78
+    y_start: # List of starting y-locations for all wells (dimensionless, 0<y<1)
+        - 0.87
+        - 0.83
+        - 0.47 
+        - 0.13 
+        - 0.20
+    y_end: # List of ending y-locations for wells (dimensionless, 0<y<1)
+        - 0.87 
+        - 0.83 
+        - 0.47 
+        - 0.27 
+        - 0.20
+    z_start: # List of starting z-locations for wells (dimensionless, 0<z<1)
+        - 0 
+        - 0 
+        - 0 
+        - 0 
+        - 0
+    z_end: # List of ending z-locations for wells (dimensionless, 0<z<1)
+        - 0 
+        - 0 
+        - 0 
+        - 0 
+        - 0
+    rw:  # Well radius
+        - 0.25
+        - 0.25
+        - 0.25
+        - 0.25
+        - 0.25
+    skin:  # Well skin
+        - 0.
+        - 0. 
+        - 0 
+        - 0. 
+        - 0.
+    type:  # Initial well type. 0 for constant rate, 1 for constant BHP wells
+        - 0 
+        - 0
+        - 0 
+        - 0
+        - 0
+    rates: # Initial liquid production rate or well pressure 
+        - 5615. 	[scf/day OR psia]
+        - 5615. 	[scf/day OR psia]	
+        - 5615. 	[scf/day OR psia]
+        - 5615.		[scf/day OR psia] 
+        - 5615.		[scf/day OR psia]
+
+    min_BHP				# all wells; convert to BHP well if producer reaches limit
+	- 800. 		[psia]
+        - 1000. 	[psia]	
+        - 900. 		[psia]
+        - 650.		[psia] 
+        - 1000.		[psia]		 
+    max_BHP: 7000  [psia] 		# all wells; convert to BHP well if injector reaches limit 
+    min_field_rate: 730 [scf/day]  	# = 130 STB/day Begin water injection in wells 2 and 5 when field oil rate declines to this value (which is at 365 days!) 
+    max_WC: 				# maximum watercut of producer well ; switch to injector (inj_rate) - this occurs after ~14 years for well #3
+	- 1.0 		[scf/day]
+        - 1.0 		[scf/day]	
+        - 0.8 		[scf/day]
+        - 1.0		[scf/day] 
+        - 1.0	[scf/day]
+    inj_rate: 		# initial water injection rate for producer converted to injector
+	- 0. 		[scf/day]
+        - 8422.5 	[scf/day]	
+        - 5615. 	[scf/day]
+        - 0.		[scf/day] 
+        - 8422.5	[scf/day]
+        	
+      	
